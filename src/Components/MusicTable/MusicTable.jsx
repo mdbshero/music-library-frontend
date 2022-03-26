@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const MusicTable = (props) => {
   return (
-    <table>
+    <table className="table">
       <thead>
         <tr>
           <th>Song Title</th>
@@ -15,7 +15,7 @@ const MusicTable = (props) => {
       <tbody>
         {props.items.map((item, index) => {
           return (
-            <tr>
+            <tr key ={index}>
               <td>{item.title}</td>
               <td>{item.album}</td>
               <td>{item.artist}</td>
