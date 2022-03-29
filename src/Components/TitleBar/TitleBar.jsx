@@ -2,7 +2,7 @@ const TitleBar = () => {
     return ( 
 <div>
     <h1>
-        Music Libary
+        Matthew Bshero's Music Libary
     </h1>
 </div>
 

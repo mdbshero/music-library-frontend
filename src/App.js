@@ -3,12 +3,11 @@ import axios from "axios";
 import MusicTable from "./Components/MusicTable/MusicTable";
 import TitleBar from "./Components/TitleBar/TitleBar";
 import SearchBar from "./Components/SearchBar/SearchBar";
-import './App.css'
+import "./App.css";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [query, setQuery] = useState("")
-
+  const [query, setQuery] = useState("");
 
   async function makeGetRequest() {
     try {
@@ -23,33 +22,46 @@ function App() {
 
   useEffect(() => {
     makeGetRequest();
-  },[]);
+  }, []);
 
   function search(rows) {
-    return rows.filter(row => row.title.toLowerCase().indexOf(query)>-1
-    || row.album.toLowerCase().indexOf(query)>-1
-    || row.artist.toLowerCase().indexOf(query)>-1
-    || row.genre.toLowerCase().indexOf(query)>-1
-    || row.releaseDate.toLowerCase().indexOf(query)>-1);
+    const columns = rows[0] && Object.keys(rows[0]);
+    return rows.filter((row) =>
+      columns.some(
+        (column) =>
+          row[column].toString().toLowerCase().indexOf(query.toLowerCase()) > -1
+      )
+    );
   }
 
+  //function search(rows) {
+  //return rows.filter(row => row.title.toLowerCase().indexOf(query.toLowerCase())>-1
+  // || row.album.toLowerCase().indexOf(query)>-1
+  //|| row.artist.toLowerCase().indexOf(query)>-1
+  //|| row.genre.toLowerCase().indexOf(query)>-1
+  // || row.releaseDate.toLowerCase().indexOf(query)>-1);
+  //}
 
   return (
-    <div className="container">
+    <div className="container gradient-custom">
       <div className="row">
-        <div className="col-md-12 mx-auto">
-        <header className="border">
-        <TitleBar />
-      </header>
-      <main>
-        <div>
-        <SearchBar query ={query} setQuery={setQuery}/>
+        <div className="col-md-10 mx-auto">
+          <header className="border border-4 border-dark text-center">
+            <TitleBar />
+          </header>
         </div>
-        <div className="border">
-      <MusicTable items={search(items)}/>
       </div>
-      </main>
-        </div>
+      <div className="row">
+          <main>
+            <div className="col-md-10 mx-auto border border-4 border-dark">
+            <div className="col-md-3 mx-auto">
+              <SearchBar query={query} setQuery={setQuery} />
+              </div>
+              <div className="col-md-10 mx-auto">
+              <MusicTable items={search(items)} />
+              </div>
+            </div>
+          </main>
       </div>
     </div>
   );
