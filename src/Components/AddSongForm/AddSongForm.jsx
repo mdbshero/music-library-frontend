@@ -34,10 +34,6 @@ const AddSongForm = (props) => {
         />
 
         <button type="submit">Create</button>
-
-        <div className="message">
-          {props.message ? <p>{props.message}</p> : null}
-        </div>
       </form>
     </div>
   );

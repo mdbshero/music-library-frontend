@@ -25,17 +25,17 @@ function App() {
     }
   }
 
+
   let handleSubmit = async (e) => {
-    const addedSong = { title, album, artist, genre, releaseDate }
+    const addedSong = { title, album, artist, genre, releaseDate };
     fetch("http://localhost:5005/api/songs", {
-      method:'POST',
-      headers:{ "Content-Type": "application/json"},
-      body: JSON.stringify(addedSong)
-  }).then(() => {
-      let response =  axios.get("http://localhost:5005/api/songs");
-      setItems(response.data);
-  })
-};
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(addedSong),
+    }).then(() => {
+      makeGetRequest();
+    });
+  };
 
   useEffect(() => {
     makeGetRequest();
@@ -92,7 +92,7 @@ function App() {
               />
             </div>
             <div className="col-md-10 mx-auto">
-              <MusicTable items={search(items)} />
+              <MusicTable items={search(items)} makeGetRequest={makeGetRequest} />
             </div>
           </div>
         </main>
