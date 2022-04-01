@@ -45,8 +45,8 @@ const MusicTable = (props) => {
                 <strong>{item.releaseDate}</strong>
               </td>
               <td>
-                <button onClick={() => handleClick(item.id)}>
-                  delete
+                <button className="btn btn-outline-danger" onClick={() => handleClick(item.id)}>
+                  X
                 </button>
               </td>
             </tr>

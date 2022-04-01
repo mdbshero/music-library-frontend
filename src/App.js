@@ -74,7 +74,7 @@ function App() {
             <div className="col-md-3 mx-auto">
               <SearchBar query={query} setQuery={setQuery} />
             </div>
-            <div className="col-md-3 mx-auto">
+            <div className="col-md-6 mx-auto">
               <AddSongForm
                 title={title}
                 album={album}
