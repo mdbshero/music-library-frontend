@@ -4,21 +4,39 @@ import MusicTable from "./Components/MusicTable/MusicTable";
 import TitleBar from "./Components/TitleBar/TitleBar";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import "./App.css";
+import AddSongForm from "./Components/AddSongForm/AddSongForm";
 
 function App() {
   const [items, setItems] = useState([]);
   const [query, setQuery] = useState("");
+  const [title, setTitle] = useState("");
+  const [album, setAlbum] = useState("");
+  const [artist, setArtist] = useState("");
+  const [genre, setGenre] = useState("");
+  const [releaseDate, setReleaseDate] = useState("");
+  const [message, setMessage] = useState("");
 
   async function makeGetRequest() {
     try {
-      let response = await axios.get(
-        "http://www.devcodecampmusiclibrary.com/api/music"
-      );
+      let response = await axios.get("http://localhost:5005/api/songs");
       setItems(response.data);
     } catch (ex) {
       console.log("Error in API call.");
     }
   }
+
+  let handleSubmit = async (e) => {
+    e.preventDefault();
+    const addedSong = { title, album, artist, genre, releaseDate }
+
+    fetch("http://localhost:5005/api/songs", {
+      method:'POST',
+      headers:{ "Content-Type": "application/json"},
+      body: JSON.stringify(addedSong)
+  }).then(() => {
+    console.log('song added')
+  })
+};
 
   useEffect(() => {
     makeGetRequest();
@@ -52,16 +70,33 @@ function App() {
         </div>
       </div>
       <div className="row">
-          <main>
-            <div className="col-md-10 mx-auto border border-4 border-dark">
+        <main>
+          <div className="col-md-10 mx-auto border border-4 border-dark">
             <div className="col-md-3 mx-auto">
               <SearchBar query={query} setQuery={setQuery} />
-              </div>
-              <div className="col-md-10 mx-auto">
-              <MusicTable items={search(items)} />
-              </div>
             </div>
-          </main>
+            <div className="col-md-3 mx-auto">
+              <AddSongForm
+                title={title}
+                album={album}
+                artist={artist}
+                genre={genre}
+                releaseDate={releaseDate}
+                message={message}
+                setTitle={setTitle}
+                setAlbum={setAlbum}
+                setArtist={setArtist}
+                setGenre={setGenre}
+                setReleaseDate={setReleaseDate}
+                setMessage={setMessage}
+                handleSubmit={handleSubmit}
+              />
+            </div>
+            <div className="col-md-10 mx-auto">
+              <MusicTable items={search(items)} />
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );
